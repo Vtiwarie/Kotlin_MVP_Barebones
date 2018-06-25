@@ -2,7 +2,7 @@ package com.enovlab.yoop.inject.api
 
 import com.enovlab.yoop.BuildConfig
 import com.enovlab.yoop.api.AppService
-import com.enovlab.yoop.api.interceptor.BaseAuthInterceptor
+import com.enovlab.yoop.api.interceptor.BaseInterceptor
 import com.enovlab.yoop.inject.NetworkModule
 import com.google.gson.Gson
 import dagger.Module
@@ -23,7 +23,7 @@ class ApiModule {
     @Singleton
     @Provides
     @Named("base_auth")
-    fun provideAuthInterceptor(interceptor: BaseAuthInterceptor): Interceptor {
+    fun provideAuthInterceptor(interceptor: BaseInterceptor): Interceptor {
         return interceptor
     }
 
@@ -37,15 +37,15 @@ class ApiModule {
             .connectTimeout(NetworkModule.CONNECTION_TIMEOUT, TimeUnit.SECONDS)
             .readTimeout(NetworkModule.CONNECTION_TIMEOUT, TimeUnit.SECONDS)
             .writeTimeout(NetworkModule.CONNECTION_TIMEOUT, TimeUnit.SECONDS)
-            .addInterceptor(authInterceptor)
+//            .addInterceptor(authInterceptor)
             .addInterceptor(loggingInterceptor)
             .build()
     }
 
     @Singleton
     @Provides
-    fun provideYoopService(@Named("base_client") okHttpClient: OkHttpClient,
-                           gson: Gson): AppService {
+    fun provideAppService(@Named("base_client") okHttpClient: OkHttpClient,
+                          gson: Gson): AppService {
 
         return Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)

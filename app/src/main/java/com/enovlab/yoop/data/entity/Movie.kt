@@ -3,14 +3,19 @@ package com.enovlab.yoop.data.entity
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.Index
 import android.arch.persistence.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 
 
 @Entity(tableName = "movies",
     indices = [
         (Index(value = ["id"], unique = true))
     ])
-data class MovieEntity(
+data class Movie(
 
     @PrimaryKey
-    var id: String
+    @SerializedName("imdbID")
+    var id: String,
+
+    @SerializedName("Title")
+    var title: String
 )

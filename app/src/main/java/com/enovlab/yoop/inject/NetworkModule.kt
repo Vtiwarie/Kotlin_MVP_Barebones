@@ -1,6 +1,8 @@
 package com.enovlab.yoop.inject
 
 import com.enovlab.yoop.BuildConfig
+import com.enovlab.yoop.api.serialize.MovieDeserializer
+import com.enovlab.yoop.data.entity.Search
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
@@ -18,7 +20,6 @@ class NetworkModule {
     fun provideGson(): Gson {
         return GsonBuilder()
             .setDateFormat(DATE_FORMAT)
-//            .registerTypeAdapter(TokenPrice::class.java, TokenPriceDeserializer())
             .create()
     }
 

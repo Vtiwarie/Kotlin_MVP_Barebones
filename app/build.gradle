@@ -16,13 +16,6 @@ androidExtensions {
     defaultCacheImplementation = "SPARSE_ARRAY"
 }
 
-def haveFabricApiKey = !propOrDef("FABRIC_API_KEY", "").isEmpty()
-if (haveFabricApiKey) {
-    apply plugin: 'io.fabric'
-}
-
-apply plugin: 'com.google.firebase.firebase-perf'
-
 android {
     compileSdkVersion 27
     buildToolsVersion "27.0.3"
@@ -37,8 +30,6 @@ android {
         multiDexEnabled true
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-        ext.enableCrashlytics = false
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -87,8 +78,6 @@ android {
         manifestPlaceholders += ["pathMyTickets": pathMyTickets]
         manifestPlaceholders += ["pathSecured": pathSecured]
 
-        // Crashlytics. Disabled by default
-        manifestPlaceholders += ["fabric-api-key": propOrDef("FABRIC_API_KEY", "")]
     }
 
     signingConfigs {
@@ -116,8 +105,6 @@ android {
 
         release {
             signingConfig signingConfigs.release
-            // Enable crashlytics
-            ext.enableCrashlytics = haveFabricApiKey
         }
 
         if (!ci) {
@@ -165,8 +152,7 @@ android {
             buildConfigField("String", "LINK_TERMS_AND_CONDITIONS", "\"${props["LINK_TERMS_AND_CONDITIONS"]}\"")
             buildConfigField("String", "LINK_PRIVACY_POLICY", "\"${props["LINK_PRIVACY_POLICY"]}\"")
             buildConfigField("String", "LINK_PURCHASE_POLICY", "\"${props["LINK_PURCHASE_POLICY"]}\"")
-            // Google Maps API
-            manifestPlaceholders += ["google-maps-api-key": props["GOOGLE_MAPS_API_KEY"]]
+            buildConfigField("String", "API_KEY", "\"${props["API_KEY"]}\"")
         }
         stg {
             dimension 'tier'
@@ -178,8 +164,7 @@ android {
             buildConfigField("String", "LINK_TERMS_AND_CONDITIONS", "\"${props["LINK_TERMS_AND_CONDITIONS"]}\"")
             buildConfigField("String", "LINK_PRIVACY_POLICY", "\"${props["LINK_PRIVACY_POLICY"]}\"")
             buildConfigField("String", "LINK_PURCHASE_POLICY", "\"${props["LINK_PURCHASE_POLICY"]}\"")
-            // Google Maps API
-            manifestPlaceholders += ["google-maps-api-key": props["GOOGLE_MAPS_API_KEY"]]
+            buildConfigField("String", "API_KEY", "\"${props["API_KEY"]}\"")
         }
         prod {
             dimension 'tier'
@@ -191,8 +176,7 @@ android {
             buildConfigField("String", "LINK_TERMS_AND_CONDITIONS", "\"${props["LINK_TERMS_AND_CONDITIONS"]}\"")
             buildConfigField("String", "LINK_PRIVACY_POLICY", "\"${props["LINK_PRIVACY_POLICY"]}\"")
             buildConfigField("String", "LINK_PURCHASE_POLICY", "\"${props["LINK_PURCHASE_POLICY"]}\"")
-            // Google Maps API
-            manifestPlaceholders += ["google-maps-api-key": props["GOOGLE_MAPS_API_KEY"]]
+            buildConfigField("String", "API_KEY", "\"${props["API_KEY"]}\"")
         }
     }
 }
@@ -250,26 +234,12 @@ dependencies {
     // JSON serializer
     implementation "com.google.code.gson:gson:${versions.gson}"
 
-    // Firebase
-    implementation "com.google.firebase:firebase-core:${versions.firebase_core}"
-    implementation "com.google.firebase:firebase-perf:${versions.firebase_perf}"
-    implementation "com.google.firebase:firebase-messaging:${versions.firebase_cm}"
-
-    // Google API's
-    implementation "com.google.android.gms:play-services-location:${versions.play_services}"
-    implementation "com.google.android.gms:play-services-maps:${versions.play_services}"
-
     // Logger
     implementation "com.jakewharton.timber:timber:${versions.timber}"
 
     // Leak Canary
     debugImplementation "com.squareup.leakcanary:leakcanary-android:${versions.leak_canary}"
     releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:${versions.leak_canary}"
-
-    // Crashlytics
-    implementation("com.crashlytics.sdk.android:crashlytics:${versions.crashlytics}") {
-        transitive = true;
-    }
 
     // Image processing
     implementation "com.github.bumptech.glide:glide:${versions.glide}"
@@ -278,17 +248,12 @@ dependencies {
     // SVG parser
     implementation "com.caverock:androidsvg:${versions.svg_parser}"
 
-    // Exo Player
-    implementation "com.google.android.exoplayer:exoplayer:${versions.exo_player}"
-
     // Widgets
     implementation "com.github.warkiz.widget:indicatorseekbar:${versions.indicator_seekbar}"
     implementation "de.hdodenhof:circleimageview:${versions.civ}"
     implementation "com.github.chrisbanes:PhotoView:${versions.photo_view}"
     implementation "net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:${versions.keyboard}"
     implementation "com.daimajia.swipelayout:library:${versions.swipe_layout}"
-
-    implementation "io.card:android-sdk:${versions.card_io}"
 
     implementation "com.zendesk:support:${versions.zendesk}"
     implementation "com.zopim.android:sdk:${versions.zendesk_chat}"
@@ -328,5 +293,3 @@ dependencies {
     //custom tabs
     implementation "com.android.support:customtabs:${versions.support_library}"
 }
-
-apply plugin: 'com.google.gms.google-services'

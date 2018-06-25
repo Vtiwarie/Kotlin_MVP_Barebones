@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.enovlab.yoop.R
+import com.enovlab.yoop.data.entity.Movie
 import com.enovlab.yoop.ui.base.ViewModelOwner
 import com.enovlab.yoop.ui.main.MainFragment
 
@@ -21,6 +22,10 @@ class MovieListFragment : MainFragment<MovieListView, MovieListViewModel>(), Mov
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun submitList(movies: List<Movie>) {
+        
     }
 
     companion object {

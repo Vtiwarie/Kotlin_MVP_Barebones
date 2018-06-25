@@ -22,7 +22,6 @@ buildscript {
             'exo_player'       : '2.8.1',
             'timber'           : '4.7.0',
             'leak_canary'      : '1.5.4',
-            'crashlytics'      : '2.9.3@aar',
             'junit'            : '4.12',
             'espresso'         : '3.0.2',
             'runner'           : '1.0.2',
@@ -44,14 +43,12 @@ buildscript {
     repositories {
         google()
         jcenter()
-        maven { url 'https://maven.fabric.io/public' }
     }
 
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
         classpath "org.jetbrains.kotlin:kotlin-android-extensions:${versions.kotlin}"
-        classpath 'io.fabric.tools:gradle:1.25.4'
         classpath 'com.google.gms:google-services:4.0.1'
         classpath 'com.google.firebase:firebase-plugins:1.1.5'
     }
@@ -65,7 +62,6 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven { url 'https://maven.fabric.io/public' }
         maven { url "https://jitpack.io" }
         maven { url 'https://zendesk.jfrog.io/zendesk/repo' }
     }

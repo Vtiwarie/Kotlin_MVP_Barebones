@@ -11,7 +11,7 @@ class DataMangerImpl
 ////        return Completable.fromCallable {
 ////            if (clearUser) {
 ////                preferences.clear()
-////                userDao.deleteUser()
+////                movieDao.deleteUser()
 ////            }
 ////            paymentMethodDao.delete()
 ////            eventDao.deleteUserEvents()

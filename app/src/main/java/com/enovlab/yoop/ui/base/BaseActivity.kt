@@ -5,15 +5,12 @@ import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import com.crashlytics.android.Crashlytics
-import com.crashlytics.android.core.CrashlyticsCore
 import com.enovlab.yoop.BuildConfig
 import com.enovlab.yoop.data.manager.AppPreferencesImpl
 import com.enovlab.yoop.utils.RxAwareObserver
 import com.enovlab.yoop.utils.AppContextWrapper
 import com.enovlab.yoop.utils.ext.hideKeyboard
 import dagger.android.support.DaggerAppCompatActivity
-import io.fabric.sdk.android.Fabric
 import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 
@@ -34,10 +31,6 @@ abstract class BaseActivity<N : ViewModel> : DaggerAppCompatActivity(), BaseView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val crashlyticsCore = CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build()
-        val crashlytics = Crashlytics.Builder().core(crashlyticsCore).build()
-        Fabric.with(this, crashlytics)
 
         navigator = ViewModelProvider(this, viewModelFactory).get(navigatorClass)
         setupNavigation(navigator)
