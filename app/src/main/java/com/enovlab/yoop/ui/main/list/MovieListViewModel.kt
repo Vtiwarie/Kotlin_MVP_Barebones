@@ -13,8 +13,8 @@ class MovieListViewModel
 ) : StateViewModel<MovieListView>() {
 
     override fun start() {
-        load { movieRepository.loadMovies(APIKEY, "Jurassic World").toCompletable() }
         observeMovies()
+        load { movieRepository.loadMovies(APIKEY, "Jurassic World").toCompletable() }
     }
 
     private fun observeMovies() {

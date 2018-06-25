@@ -5,7 +5,7 @@ interface ListItem {
     data class Typed(val type: Type) : ListItem
 
     enum class Type {
-        LOADING, DISCOVER, SEARCH, REQUESTED, CONTACTS
+        LOADING, MOVIELIST
     }
 }
 

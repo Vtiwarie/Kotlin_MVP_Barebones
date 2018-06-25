@@ -1,15 +1,16 @@
-/*package com.enovlab.yoop.ui.main.list.adapter
+package com.enovlab.yoop.ui.main.list.adapter
 
 import android.support.v7.util.DiffUtil
 import android.view.ViewGroup
+import com.enovlab.yoop.data.entity.Movie
 import com.enovlab.yoop.ui.base.list.BaseViewHolder
 import com.enovlab.yoop.ui.base.list.ListItem
 import com.enovlab.yoop.ui.base.list.LoadingAdapter
 import com.enovlab.yoop.ui.base.list.LoadingViewHolder
 
-class MovieListAdapter : LoadingAdapter<DiscoverItem>() {
+class MovieListAdapter : LoadingAdapter<Movie>() {
 
-    var listener: ((DiscoverItem) -> Unit)? = null
+    var listener: ((Movie) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return when (viewType) {
@@ -28,20 +29,17 @@ class MovieListAdapter : LoadingAdapter<DiscoverItem>() {
     override fun getItemViewType(position: Int): Int {
         return when {
             isLoadingType(position) -> ListItem.Type.LOADING.ordinal
-            else -> ListItem.Type.DISCOVER.ordinal
+            else -> ListItem.Type.MOVIELIST.ordinal
         }
     }
 
-    override fun createDiffCallback() = object : DiffUtil.ItemCallback<DiscoverItem>() {
-        override fun areItemsTheSame(oldItem: DiscoverItem, newItem: DiscoverItem): Boolean {
-            return oldItem.event.id == newItem.event.id
+    override fun createDiffCallback() = object : DiffUtil.ItemCallback<Movie>() {
+        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+            return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: DiscoverItem, newItem: DiscoverItem): Boolean {
-            return oldItem.event.name == newItem.event.name
-                && oldItem.event.date == newItem.event.date
-                && oldItem.event.locationName == newItem.event.locationName
-                && oldItem.pills == newItem.pills
+        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+            return oldItem.id == newItem.id
         }
     }
 
@@ -52,4 +50,3 @@ class MovieListAdapter : LoadingAdapter<DiscoverItem>() {
         }
     }
 }
-    */

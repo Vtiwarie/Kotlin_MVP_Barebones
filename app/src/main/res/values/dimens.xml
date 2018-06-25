@@ -30,4 +30,7 @@
 
     <dimen name="progress_bar_size_normal">56dp</dimen>
 
+    <dimen name="list_image_width">100dp</dimen>
+    <dimen name="list_image_height">100dp</dimen>
+
 </resources>

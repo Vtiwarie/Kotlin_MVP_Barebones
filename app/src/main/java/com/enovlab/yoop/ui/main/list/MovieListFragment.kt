@@ -8,12 +8,14 @@ import com.enovlab.yoop.R
 import com.enovlab.yoop.data.entity.Movie
 import com.enovlab.yoop.ui.base.ViewModelOwner
 import com.enovlab.yoop.ui.main.MainFragment
+import com.enovlab.yoop.ui.main.list.adapter.MovieListAdapter
+import kotlinx.android.synthetic.main.fragment_movie_list.*
 
 class MovieListFragment : MainFragment<MovieListView, MovieListViewModel>(), MovieListView {
     override val viewModelOwner = ViewModelOwner.FRAGMENT
     override val vmClass = MovieListViewModel::class.java
 
-//    private val adapter: MovieListAdapter by lazy { MovieListAdapter() }
+    private val movieListAdapter: MovieListAdapter by lazy { MovieListAdapter() }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -22,10 +24,13 @@ class MovieListFragment : MainFragment<MovieListView, MovieListViewModel>(), Mov
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        movieListAdapter.listener = {}
+        movie_list.adapter = movieListAdapter
     }
 
     override fun submitList(movies: List<Movie>) {
-        
+        movieListAdapter.submitList(movies)
     }
 
     companion object {
