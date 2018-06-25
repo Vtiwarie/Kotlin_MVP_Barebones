@@ -7,10 +7,10 @@ import io.reactivex.Flowable
 
 
 @Dao
-abstract class MovieDao  {
+abstract class MovieDao {
 
     @Transaction
-    @Query("SELECT * FROM movies LIMIT 100")
+    @Query("SELECT * FROM movies ORDER BY title ASC LIMIT 100")
     abstract fun getMovies(): Flowable<List<MovieQuery>>
 
     @Transaction
@@ -23,16 +23,25 @@ abstract class MovieDao  {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     protected abstract fun saveMovieInternal(movie: Movie)
 
+    @Query("DELETE FROM movies WHERE id NOT IN(:ids)")
+    protected abstract fun deleteIrrelevantMovies(ids: List<String>?)
+
     @Transaction
     @Query("DELETE FROM movies")
     abstract fun clearMovies()
 
     @Transaction
-    open fun saveMovies(movies: List<Movie>){
-        movies.forEach{
-            if(it != null && movies.isNotEmpty()) {
-                saveMovieInternal(it)
-            }
+    open fun saveMovies(movies: List<Movie>? = null) {
+        syncMovies(movies)
+    }
+
+    private fun syncMovies(movies: List<Movie>? = null) {
+        val ids = movies?.map { it.id }
+
+        deleteIrrelevantMovies(ids)
+
+        movies?.forEach {
+            saveMovieInternal(it)
         }
     }
 }

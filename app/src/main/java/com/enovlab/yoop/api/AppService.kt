@@ -10,7 +10,7 @@ import retrofit2.http.Query
 
 interface AppService {
     @GET("/")
-    fun getMovies(@Query("apikey")apikey: String, @Query("s") s: String): Flowable<Search>
+    fun getMovies(@Query("apikey")apikey: String, @Query("s") s: String?): Flowable<Search>
 
     @GET("/")
     fun getMovie(@Query("apikey")apikey: String, @Query("i") id: String?): Single<Movie>

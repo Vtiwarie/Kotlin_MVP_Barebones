@@ -8,12 +8,15 @@ import com.enovlab.yoop.data.query.MovieQuery
 import com.enovlab.yoop.utils.RxSchedulers
 import io.reactivex.Flowable
 import io.reactivex.Single
+import io.reactivex.subjects.BehaviorSubject
 import javax.inject.Inject
 
 class MovieRepository
 @Inject constructor(private val appService: AppService,
                     private val movieDao: MovieDao,
                     private val schedulers: RxSchedulers) {
+
+    var error = BehaviorSubject.create<String>()
 
     fun observeMovies(): Flowable<List<Movie>> {
         return movieDao.getMovies()
@@ -33,13 +36,20 @@ class MovieRepository
             .distinctUntilChanged()
     }
 
-    fun loadMovies(apikey: String, search: String): Flowable<Search> {
+    fun loadMovies(apikey: String, search: String?): Flowable<Search> {
         return appService.getMovies(apikey, search)
             .subscribeOn(schedulers.network)
             .observeOn(schedulers.disk)
             .doOnNext {
-                movieDao.clearMovies()
-                movieDao.saveMovies(it.movies)
+                when {
+                    it.error != null && it.error!!.isNotEmpty() -> {
+                        error.onNext(it.error!!)
+                    }
+                    else -> {
+                        movieDao.clearMovies()
+                        movieDao.saveMovies(it.movies)
+                    }
+                }
             }
     }
 

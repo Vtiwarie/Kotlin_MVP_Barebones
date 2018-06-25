@@ -25,4 +25,4 @@ data class Movie(
     @SerializedName("Poster")
     var defaultImage: String?
 
-)
+): BaseEntity()

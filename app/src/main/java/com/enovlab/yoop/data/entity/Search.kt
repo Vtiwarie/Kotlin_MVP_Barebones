@@ -8,4 +8,4 @@ data class Search (
     @Embedded
     @SerializedName("Search")
     var movies: List<Movie>
-)
+): BaseEntity()

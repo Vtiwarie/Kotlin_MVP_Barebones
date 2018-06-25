@@ -12,7 +12,7 @@ fun <T : ResponseBody> T?.message(): String? {
         try {
             val gson = GsonBuilder().create()
             val response = gson.fromJson(this.string(), ErrorResponse::class.java)
-            message = response.message
+            message = response.error
         } catch (e: Exception) {
             Timber.e(e)
         }
