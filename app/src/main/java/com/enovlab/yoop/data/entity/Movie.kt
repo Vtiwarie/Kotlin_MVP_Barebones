@@ -17,7 +17,10 @@ data class Movie(
     var id: String,
 
     @SerializedName("Title")
-    var title: String,
+    var title: String?,
+
+    @SerializedName("Plot")
+    var plot: String?,
 
     @SerializedName("Poster")
     var defaultImage: String?

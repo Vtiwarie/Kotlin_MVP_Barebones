@@ -19,22 +19,26 @@ class MainActivity : StateActivity<MainView, MainViewModel, MainNavigator>(), Ma
         viewModel = ViewModelProvider(this, viewModelFactory)
             .get(MainViewModel::class.java)
 
-        showMoviesListFragment()
+        navigateToMoviesListFragment()
     }
 
     override fun setupNavigation(navigator: MainNavigator) {
+        navigator.navigateToMovieList.observeNavigation { navigateToMoviesListFragment() }
+        navigator.navigateToMovieDetails.observeNavigation { navigateToMovieDetailFragment(it) }
     }
 
-    private fun showMoviesListFragment() {
+    private fun navigateToMoviesListFragment() {
         supportFragmentManager.beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            .addToBackStack(null)
             .replace(CONTAINER, MovieListFragment.newInstance())
             .commit()
     }
 
-    private fun showMovieDetailFragment(movieId: Int) {
+    private fun navigateToMovieDetailFragment(movieId: String?) {
         supportFragmentManager.beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            .addToBackStack(null)
             .replace(CONTAINER, MovieDetailFragment.newInstance(movieId))
             .commit()
     }

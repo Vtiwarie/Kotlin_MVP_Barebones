@@ -28,6 +28,14 @@
         <item name="android:textSize">@dimen/text_size_headline</item>
     </style>
 
+    <style name="Text.Bold.LargeHeadline">
+        <item name="android:textSize">@dimen/text_size_large_headline</item>
+    </style>
+
+    <style name="Text.Bold.LargeHeadline.White">
+        <item name="android:textColor">@color/color_white</item>
+    </style>
+
     <style name="Text.Bold.Caption.White">
         <item name="android:textColor">@color/color_white</item>
     </style>

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import com.enovlab.yoop.R
 import com.enovlab.yoop.data.entity.Movie
@@ -26,11 +27,11 @@ class MovieListFragment : MainFragment<MovieListView, MovieListViewModel>(), Mov
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        movieListAdapter.listener = {}
+        movieListAdapter.listener = { navigator.navigateToMovieDetails.go(it.id) }
         movie_list.adapter = movieListAdapter
 
         search_button.setOnClickListener {
-            viewModel.refresh(search_field.editableText.toString())
+            viewModel.refresh(search_field.editableText.toString().trim())
         }
     }
 
@@ -48,6 +49,10 @@ class MovieListFragment : MainFragment<MovieListView, MovieListViewModel>(), Mov
 
     override fun showLoadingIndicator(active: Boolean) {
         movieListAdapter.isLoading = active
+    }
+
+    override fun showError(message: String?) {
+        Toast.makeText(activity!!, message, Toast.LENGTH_LONG).show()
     }
 
     companion object {

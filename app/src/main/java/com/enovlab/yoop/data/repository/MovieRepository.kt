@@ -7,6 +7,7 @@ import com.enovlab.yoop.data.entity.Search
 import com.enovlab.yoop.data.query.MovieQuery
 import com.enovlab.yoop.utils.RxSchedulers
 import io.reactivex.Flowable
+import io.reactivex.Single
 import javax.inject.Inject
 
 class MovieRepository
@@ -23,6 +24,15 @@ class MovieRepository
             .distinctUntilChanged()
     }
 
+    fun observeMovie(id: String?): Flowable<Movie> {
+        return movieDao.getMovie(id)
+            .subscribeOn(schedulers.disk)
+            .observeOn(schedulers.main)
+            .map(MovieQuery::toMovie)
+            .observeOn(schedulers.main)
+            .distinctUntilChanged()
+    }
+
     fun loadMovies(apikey: String, search: String): Flowable<Search> {
         return appService.getMovies(apikey, search)
             .subscribeOn(schedulers.network)
@@ -33,7 +43,12 @@ class MovieRepository
             }
     }
 
-    companion object {
-        private const val MULTIPART = "multipart/form-data"
+    fun loadMovie(apikey: String, id: String?): Single<Movie> {
+        return appService.getMovie(apikey, id)
+            .subscribeOn(schedulers.network)
+            .observeOn(schedulers.disk)
+            .doOnSuccess {
+                movieDao.saveMovie(it)
+            }
     }
 }

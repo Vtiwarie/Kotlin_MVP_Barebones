@@ -17,5 +17,9 @@ class MovieListViewHolder(parent: ViewGroup, val listener: ((Movie) -> Unit)? = 
             movie.defaultImage == null -> list_image.setImageResource(android.R.drawable.ic_menu_close_clear_cancel)
             else -> list_image.loadImage(movie.defaultImage)
         }
+
+        if (listener != null) {
+            itemView.setOnClickListener { listener.invoke(movie) }
+        }
     }
 }

@@ -15,7 +15,8 @@ class MovieListViewModel
     //Initially load movies with "Jurassic World" search terms. This is configurable upon dev's discretion
     override fun start() {
         observeMovies()
-        load { movieRepository.loadMovies(APIKEY, "").toCompletable() }
+        load { movieRepository.loadMovies(APIKEY, "").toCompletable()
+        }
     }
 
     internal fun refresh(search: String) {
