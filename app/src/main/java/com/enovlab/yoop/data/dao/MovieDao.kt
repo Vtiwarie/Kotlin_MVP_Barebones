@@ -17,10 +17,16 @@ abstract class MovieDao  {
     protected abstract fun saveMovieInternal(movie: Movie)
 
     @Transaction
+    @Query("DELETE FROM movies")
+    abstract fun clearMovies()
+
+    @Transaction
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     open fun saveMovies(movies: List<Movie>){
         movies.forEach{
-            saveMovieInternal(it)
+            if(it != null) {
+                saveMovieInternal(it)
+            }
         }
     }
 }

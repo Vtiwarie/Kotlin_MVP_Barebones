@@ -12,16 +12,28 @@ class MovieListViewModel
 @Inject constructor(private val movieRepository: MovieRepository
 ) : StateViewModel<MovieListView>() {
 
+    //Initially load movies with "Jurassic World" search terms. This is configurable upon dev's discretion
     override fun start() {
         observeMovies()
-        load { movieRepository.loadMovies(APIKEY, "Jurassic World").toCompletable() }
+        load { movieRepository.loadMovies(APIKEY, "").toCompletable() }
+    }
+
+    internal fun refresh(search: String) {
+        refresh { movieRepository.loadMovies(APIKEY, search).toCompletable() }
     }
 
     private fun observeMovies() {
         disposables += movieRepository.observeMovies()
             .subscribe({
                 //submit list of movies to view for updating
-                view?.submitList(it)
+                if (it.isEmpty()) {
+                    view?.showEmptyList(true)
+                    view?.showList(false)
+                } else {
+                    view?.showEmptyList(false)
+                    view?.submitList(it)
+                    view?.showList(true)
+                }
             },
                 {
                     Timber.d(it.message)

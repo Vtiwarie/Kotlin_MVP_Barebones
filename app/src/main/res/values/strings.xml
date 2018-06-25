@@ -2,4 +2,7 @@
 <resources>
     <string name="app_name">Vishaan Movie Demo</string>
 
+    <string name="search">Search Movies</string>
+    <string name="no_results">Please search a movie to view results.</string>
+
 </resources>

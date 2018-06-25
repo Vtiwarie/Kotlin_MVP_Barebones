@@ -28,6 +28,7 @@ class MovieRepository
             .subscribeOn(schedulers.network)
             .observeOn(schedulers.disk)
             .doOnNext {
+                movieDao.clearMovies()
                 movieDao.saveMovies(it.movies)
             }
     }

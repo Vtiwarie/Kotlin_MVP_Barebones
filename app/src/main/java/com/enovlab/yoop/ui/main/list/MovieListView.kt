@@ -5,4 +5,6 @@ import com.enovlab.yoop.ui.base.state.StateView
 
 interface MovieListView : StateView {
     fun submitList(movies: List<Movie>)
+    fun showEmptyList(show: Boolean)
+    fun showList(show: Boolean)
 }
