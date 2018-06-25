@@ -29,7 +29,7 @@ class MovieListViewModel
         disposables += movieRepository.error
             .observeOn(schedulers.main)
             .subscribe {
-                if (searchTerm?.isEmpty() == true) {
+                if (searchTerm?.isNotEmpty() == true) {
                     view?.showError(it)
                 }
             }
