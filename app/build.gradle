@@ -21,7 +21,7 @@ android {
     buildToolsVersion "27.0.3"
 
     defaultConfig {
-        applicationId "com.enovlab.yoop"
+        applicationId "com.vishaan.movieapp"
         minSdkVersion 21
         targetSdkVersion 27
         versionCode 19
@@ -45,23 +45,6 @@ android {
         def pathAssignment = propOrDef("DEEP_LINK_PATH_TOKEN_ASSIGNMENT", "")
         def pathMyTickets = propOrDef("DEEP_LINK_PATH_MY_TICKETS", "")
         def pathSecured = propOrDef("DEEP_LINK_PATH_SECURED", "")
-
-        buildConfigField("String", "DEEP_LINK_HOST", "\"${hostName}\"")
-        buildConfigField("String", "DEEP_LINK_SCHEME", "\"${scheme}\"")
-        buildConfigField("String", "DEEP_LINK_PATH_EMAIL_VERIFIED", "\"${pathEmailVerified}\"")
-        buildConfigField("String", "DEEP_LINK_PATH_CHANGE_PASSWORD", "\"${pathChangePassword}\"")
-        buildConfigField("String", "DEEP_LINK_PATH_EVENTS", "\"${pathEvents}\"")
-        buildConfigField("String", "DEEP_LINK_PATH_TOKEN_ASSIGNMENT", "\"${pathAssignment}\"")
-        buildConfigField("String", "DEEP_LINK_PATH_MY_TICKETS", "\"${pathMyTickets}\"")
-        buildConfigField("String", "DEEP_LINK_PATH_SECURED", "\"${pathSecured}\"")
-        buildConfigField("String", "DEEP_LINK_QUERY_TOKEN", "\"${propOrDef("DEEP_LINK_QUERY_TOKEN", "")}\"")
-        buildConfigField("String", "DEEP_LINK_QUERY_EVENT_ID", "\"${propOrDef("DEEP_LINK_QUERY_EVENT_ID", "")}\"")
-        buildConfigField("String", "DEEP_LINK_QUERY_ASSIGNMENT_TOKEN", "\"${propOrDef("DEEP_LINK_QUERY_ASSIGNMENT_TOKEN", "")}\"")
-        buildConfigField("String", "DEEP_LINK_QUERY_EMAIL", "\"${propOrDef("DEEP_LINK_QUERY_EMAIL", "")}\"")
-        buildConfigField("String", "DEEP_LINK_QUERY_MARKETPLACE_ID", "\"${propOrDef("DEEP_LINK_QUERY_MARKETPLACE_ID", "")}\"")
-        buildConfigField("String", "DEEP_LINK_QUERY_OFFER_GROUP_ID", "\"${propOrDef("DEEP_LINK_QUERY_OFFER_GROUP_ID", "")}\"")
-        buildConfigField("String", "DEEP_LINK_QUERY_OFFER_ID", "\"${propOrDef("DEEP_LINK_QUERY_OFFER_ID", "")}\"")
-        buildConfigField("String", "DEEP_LINK_QUERY_TICKET_DETAILS", "\"${propOrDef("DEEP_LINK_QUERY_TICKET_DETAILS", "")}\"")
 
         buildConfigField("String", "ZENDESK_BASE_URL", "\"${propOrDef("ZENDESK_BASE_URL", "")}\"")
         buildConfigField("String", "ZENDESK_APP_ID", "\"${propOrDef("ZENDESK_APP_ID", "")}\"")
@@ -91,7 +74,7 @@ android {
         release {
             storeFile rootProject.file("signing/app-release.jks")
             storePassword propOrDef('RELEASE_KEYSTORE_PWD', "")
-            keyAlias "yoop"
+            keyAlias "movie"
             keyPassword propOrDef('RELEASE_KEY_PWD', "")
         }
     }
