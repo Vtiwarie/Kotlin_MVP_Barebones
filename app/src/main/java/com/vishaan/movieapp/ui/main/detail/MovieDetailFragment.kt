@@ -1,7 +1,9 @@
 package com.vishaan.movieapp.ui.main.detail
 
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import com.vishaan.movieapp.R
@@ -25,12 +27,26 @@ class MovieDetailFragment : MainFragment<MovieDetailView, MovieDetailViewModel>(
         return inflater.inflate(R.layout.fragment_detail_list, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupActionBar()
+    }
+
+    private fun setupActionBar() {
+        (context!! as AppCompatActivity).setSupportActionBar(app_bar)
+
+        val supportActioBar = (context!! as AppCompatActivity).supportActionBar
+        supportActioBar?.setDisplayHomeAsUpEnabled(true)
+        supportActioBar?.setDisplayShowHomeEnabled(true)
+    }
+
     override fun showMovieImage(url: String?) {
         movie_image.loadImage(url)
     }
 
     override fun showMovieTitle(title: String?) {
         movie_title.text = title
+        app_bar.title = title
     }
 
     override fun showMoviePlot(plot: String?) {
@@ -39,6 +55,16 @@ class MovieDetailFragment : MainFragment<MovieDetailView, MovieDetailViewModel>(
 
     override fun showNoImage() {
         movie_image.setImageResource(R.mipmap.ic_default_movie)
+    }
+
+    internal fun onItemSelected(item: MenuItem?): Boolean {
+        when {
+            item?.itemId == android.R.id.home -> {
+                activity!!.onBackPressed()
+                return true
+            }
+        }
+        return activity!!.onOptionsItemSelected(item)
     }
 
     companion object {

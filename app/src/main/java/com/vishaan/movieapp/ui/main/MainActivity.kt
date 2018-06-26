@@ -3,6 +3,7 @@ package com.vishaan.movieapp.ui.main
 import android.arch.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.support.v4.app.FragmentTransaction
+import android.view.MenuItem
 import com.vishaan.movieapp.R
 import com.vishaan.movieapp.ui.base.state.StateActivity
 import com.vishaan.movieapp.ui.main.detail.MovieDetailFragment
@@ -41,6 +42,14 @@ class MainActivity : StateActivity<MainView, MainViewModel, MainNavigator>(), Ma
             .addToBackStack(null)
             .replace(CONTAINER, MovieDetailFragment.newInstance(movieId))
             .commit()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        val fragment = supportFragmentManager.findFragmentById(CONTAINER)
+        if (fragment is MovieDetailFragment) {
+            return fragment.onItemSelected(item)
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     companion object {

@@ -1,7 +1,6 @@
 package com.vishaan.movieapp.ui.main.list
 
 import android.os.Bundle
-import android.support.v7.widget.SimpleItemAnimator
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,11 +27,15 @@ class MovieListFragment : MainFragment<MovieListView, MovieListViewModel>(), Mov
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        movieListAdapter.listener = { navigator.navigateToMovieDetails.go(it.id) }
+        movieListAdapter.listener = {
+            navigator.navigateToMovieDetails.go(it.id)
+            hideKeyboard()
+        }
         movie_list.adapter = movieListAdapter
 
         search_button.setOnClickListener {
             viewModel.refresh(search_field.editableText.toString().trim())
+            hideKeyboard()
         }
     }
 
